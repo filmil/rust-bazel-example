@@ -6,7 +6,8 @@ I wanted to do this because I think [bazel] is super-useful for building larger
 project with many targets, and we should use it more.
 
 One of the issues with bazel is that many languages have poor IDE integration.
-Rust is *not* one of those languages, which is nice.
+Rust is *not* one of those languages, which is nice. I wanted to check how it
+works with nvim and [LanguageClient-neovim][lcneovim].
 
 ## Things I did to make this happen
 
@@ -51,3 +52,4 @@ Changes needed to make a minimal program that uses bazel to build a rust binary.
 [cr]: https://github.com/google/cargo-raze
 [bpl]: https://docs.rs/bumpalo 
 [bazel]: https://bazel.io
+[lcneovim]: https://github.com/autozimu/LanguageClient-neovim
