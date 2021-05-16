@@ -4,7 +4,7 @@ package(default_visibility = ["//visibility:public"])
 
 rust_binary(
     name = "my_program",
-    srcs = ["src/main.rs"],
+    srcs = ["src/main.rs", "src/some.rs",],
     deps = [
        "//third_party/cargo:bumpalo",
     ],

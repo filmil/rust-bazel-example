@@ -2,6 +2,8 @@
 use bumpalo::Bump;
 use std::u64;
 
+mod some;
+
 #[allow(dead_code)]
 struct Doggo {
     cuteness: u64,
@@ -11,6 +13,9 @@ struct Doggo {
 
 fn main() {
     println!("hello world!");
+
+    // Here is how to call a function from a mod.
+    some::some();
 
     // The code below has been taken from the bumpalo examples, just to show
     // how one includes a dependency into a rust binary built with bazel.
