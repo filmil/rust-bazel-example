@@ -1,0 +1,23 @@
+[package]
+edition = "2018"
+
+[lib]
+path = "fake_lib.rs"
+
+[dependencies]
+bumpalo = "3.6"
+
+### And now, additions for cargo-raze.
+
+[package.metadata.raze]
+workspace_path = "//third_party/cargo"
+
+package_aliases_dir = "."
+
+targets = [
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu",
+]
+
+genmode = "Remote"

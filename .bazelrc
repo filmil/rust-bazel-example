@@ -1,0 +1,5 @@
+# The flag below supposedly helps running the generator for rust-project.json,
+# but I haven't noticed that it does.
+
+build \
+    --repo_env=RULES_RUST_TOOLCHAIN_INCLUDE_RUSTC_SRCS=true

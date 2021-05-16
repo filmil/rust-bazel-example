@@ -1,0 +1,11 @@
+load("@rules_rust//rust:rust.bzl", "rust_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+rust_binary(
+    name = "my_program",
+    srcs = ["src/main.rs"],
+    deps = [
+       "//third_party/cargo:bumpalo",
+    ],
+)

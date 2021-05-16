@@ -1,0 +1,8 @@
+load("@rules_rust//rust:defs.bzl", "rust_analyzer")
+
+rust_analyzer(
+    name = "rust_analyzer",
+    targets = [
+        "//program:my_program",
+    ],
+)
