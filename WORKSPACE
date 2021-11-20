@@ -2,19 +2,20 @@ workspace(name = "rust_bazel_examples")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+
 http_archive(
     name = "rules_rust",
-    sha256 = "18c0a02a007cd26c3f5b4d21dc26a80af776ef755460028a796bc61c649fdf3f",
-    strip_prefix = "rules_rust-467a301fd665db344803c1d8a2401ec2bf8c74ce",
+    sha256 = "accb5a89cbe63d55dcdae85938e56ff3aa56f21eb847ed826a28a83db8500ae6",
+    strip_prefix = "rules_rust-9aa49569b2b0dacecc51c05cee52708b7255bd98",
     urls = [
-        # Master branch as of 2021-04-23
-        "https://github.com/bazelbuild/rules_rust/archive/467a301fd665db344803c1d8a2401ec2bf8c74ce.tar.gz",
+        # Main branch as of 2021-02-19
+        "https://github.com/bazelbuild/rules_rust/archive/9aa49569b2b0dacecc51c05cee52708b7255bd98.tar.gz",
     ],
 )
 
 load("@rules_rust//rust:repositories.bzl", "rust_repositories")
 
-rust_repositories(version="1.52.0",edition="2018")
+rust_repositories(version="1.56.0",edition="2021")
 
 ######################################################################
 
