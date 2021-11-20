@@ -49,7 +49,11 @@ Changes needed to make a minimal program that uses bazel to build a rust binary.
   bazel run @rules_rust//tools/rust_analyzer:gen_rust_project
   ```
 
-[cr]: https://github.com/google/cargo-raze
-[bpl]: https://docs.rs/bumpalo 
+  This will enable you to use [rust-analyzer][ra] as your language server for
+  the project and all vendored crates.
+
 [bazel]: https://bazel.io
+[bpl]: https://docs.rs/bumpalo 
+[cr]: https://github.com/google/cargo-raze
 [lcneovim]: https://github.com/autozimu/LanguageClient-neovim
+[ra]: https://rust-analyzer.github.io
