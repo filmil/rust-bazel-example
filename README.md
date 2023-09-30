@@ -2,11 +2,11 @@
 
 An example starter project that uses bazel to compile rust programs.
 
-I wanted to do this because I think [bazel] is super-useful for building larger
-project with many targets, and we should use it more.
+I wanted to do this because I think [bazel] is useful for building
+project with many target types, and we should use it more.
 
-One of the issues with bazel is that many languages have poor IDE integration.
-Rust is *not* one of those languages, which is nice. I wanted to check how it
+One of the issues with bazel is that many rules have poor IDE integration.
+Rust rules are *not* one of those, which is nice. Here is how it
 works with nvim and [LanguageClient-neovim][lcneovim].
 
 ## Things I did to make this happen
