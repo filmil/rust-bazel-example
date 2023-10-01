@@ -1,23 +1,49 @@
 # rust-bazel-example ![Build](https://github.com/filmil/rust-bazel-example/actions/workflows/build.yml/badge.svg)
 
-> Automated builds are executed on each PR, and once a week even if no changes.*
+> Automated builds are executed on each PR, and once a week even if no code changed the week prior.
 
-An example starter project that uses bazel to compile rust programs.
+This is an example starter project that uses bazel to compile rust programs.
 
 I wanted to do this because I think [bazel] is useful for building
 project with many target types, and we should use it more.
 
 One of the issues with bazel is that many rules have poor IDE integration.
-Rust rules are *not* one of those, which is nice. Here is how it
-works with nvim and [LanguageClient-neovim][lcneovim].
+Rust rules are *not* one of those, which is nice. This example generates
+`rust-project.json`, which you can plug into the IDE of your choice, if your
+IDE supports the Language Server Protocol ([LSP][lsp]).
 
-# Try it out
+[lsp]: https://langserver.org/
+
+# Try it out *now*
+
+The below command should simply work. File a bug if it does not.
 
 ```
 bazel run //program:my_program
 ```
 
-## Things I did to make this happen
+## Re-generate `rust-project.json`
+
+You want to run the command below whenever your list of rust external dependencies changes.
+This command is documented at: https://bazelbuild.github.io/rules_rust/rust_analyzer.html
+
+```
+bazel run @rules_rust//tools/rust_analyzer:gen_rust_project
+```
+
+## Re-generate lockfiles
+
+You want to run the command below whenever your list of rust external dependencies changes.
+```
+env CARGO_BAZEL_REPIN=true bazel build //...
+```
+
+# Where to go from here?
+
+If you want to see more examples of rust use in Bazel, check out the `rules_rust` examples page
+at: https://github.com/bazelbuild/rules_rust/tree/main/examples
+
+# Things I did to make this happen
 
 Here are the changes needed to make a minimal program that uses bazel to build
 a rust binary.
