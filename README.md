@@ -1,6 +1,6 @@
 # rust-bazel-example
 
-https://github.com/filmil/rust-bazel-example/actions/workflows/build.yml/badge.svg
+![Build](https://github.com/filmil/rust-bazel-example/actions/workflows/build.yml/badge.svg)
 
 An example starter project that uses bazel to compile rust programs.
 
