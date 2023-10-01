@@ -2,20 +2,17 @@ workspace(name = "rust_bazel_examples")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-
 http_archive(
     name = "rules_rust",
-    sha256 = "accb5a89cbe63d55dcdae85938e56ff3aa56f21eb847ed826a28a83db8500ae6",
-    strip_prefix = "rules_rust-9aa49569b2b0dacecc51c05cee52708b7255bd98",
-    urls = [
-        # Main branch as of 2021-02-19
-        "https://github.com/bazelbuild/rules_rust/archive/9aa49569b2b0dacecc51c05cee52708b7255bd98.tar.gz",
-    ],
+    sha256 = "aaaa4b9591a5dad8d8907ae2dbe6e0eb49e6314946ce4c7149241648e56a1277",
+    urls = ["https://github.com/bazelbuild/rules_rust/releases/download/0.16.1/rules_rust-v0.16.1.tar.gz"],
 )
 
-load("@rules_rust//rust:repositories.bzl", "rust_repositories")
+load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
 
-rust_repositories(version="1.56.0",edition="2021")
+rules_rust_dependencies()
+
+rust_register_toolchains()
 
 ######################################################################
 
@@ -24,11 +21,34 @@ rust_repositories(version="1.56.0",edition="2021")
 
 load(
     "@rules_rust//tools/rust_analyzer:deps.bzl",
-    "gen_rust_project_dependencies")
+    "rust_analyzer_dependencies")
 
-gen_rust_project_dependencies()
+rust_analyzer_dependencies()
 
-# Used to make bazel download remote rust repositories.
-load("//third_party/cargo:crates.bzl", "raze_fetch_remote_crates")
+######################################################################
 
-raze_fetch_remote_crates()
+# This is how to generate new lock files.  At the project outset, you must
+#   (1) create the empty files `//third_party/cargo:Cargo.lock`, and
+#       `//third_party/cargo:Cargo.Bazel.lock`.
+#   (2) Run `env CARGO_BAZEL_REPI=true bazel build //...` to initialize the
+#   lockfiles.
+load("@rules_rust//crate_universe:defs.bzl", "crates_repository", "crate", "render_config")
+
+crates_repository(
+    name = "crate_index",
+    cargo_lockfile = "//:Cargo.lock",
+    lockfile = "//:Cargo.Bazel.lock",
+    packages = {
+        # Add any other crates you need here.
+        "bumpalo": crate.spec(
+            version = "3.6.1",
+        ),
+    },
+    render_config = render_config(
+        default_package_name = ""
+    ),
+)
+
+load("@crate_index//:defs.bzl", "crate_repositories")
+
+crate_repositories()

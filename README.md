@@ -1,5 +1,7 @@
 # rust-bazel-example
 
+https://github.com/filmil/rust-bazel-example/actions/workflows/build.yml/badge.svg
+
 An example starter project that uses bazel to compile rust programs.
 
 I wanted to do this because I think [bazel] is useful for building
@@ -9,41 +11,37 @@ One of the issues with bazel is that many rules have poor IDE integration.
 Rust rules are *not* one of those, which is nice. Here is how it
 works with nvim and [LanguageClient-neovim][lcneovim].
 
+# Try it out
+
+```
+bazel run //program:my_program
+```
+
 ## Things I did to make this happen
 
-Changes needed to make a minimal program that uses bazel to build a rust binary.
+Here are the changes needed to make a minimal program that uses bazel to build
+a rust binary.
 
-* Edited [WORKSPACE](workspace) file:
+The instructions below were current at the time of this writing, which was on
+September 30, 2023. Previous versions of this repository used an older version
+of `rules_rust`, and the procedure to bring in upstream crates was quite
+different.
 
-  * to include rules for building rust.
-  * to add a rule `gen_rust_project_dependencies` that allow running
-    `bazel run @rules_rust//tools/rust_analyzer:gen_rust_project`
-    to refresh the `rust-project.json` file that lives in the workspace
-    root.
-  * to add a rule that makes bazel download remote rust repositories.
+* Edited [WORKSPACE](workspace) file to:
 
-* Made the directory [//third_party/cargo](third_party/cargo) that contains the
-  file [Cargo.toml](third_party/cargo/Cargo.toml) which is defined to direct
-  `cargo raze` runs.  `cargo raze` should be run in that directory when cargo
-  dependencies are modified.
-
-  While the `cargo-raze` documentation says that crates go by default to `//cargo`,
-  I wanted to see what it would look like if rust crates were added at the same level
-  as any other external dependencies.
-
-* Made the file [program/Cargo.toml](program/Cargo.toml) which can be used to 
-  compile `program` with the regular `cargo build` from that directory.
+  * include rules for building rust.
+  * add a rule that makes bazel download remote rust repositories.
+  * add a rule to download external rust crates.
 
   The file [program/BUILD.bazel](program/BUILD.bazel) shows how you can build a
   rust binary, that uses a dependency, in this case [bumpalo][bpl].  Note how
-  the dependency is referred through its label `//third_party/cargo:bumpalo`.
+  the dependency is referred through its label `@crate_index//:bumpalo`.
 
 * Made sure that `target` and `rust-project.json` are in
-  [.gitignore](.gitignore).
+  [.gitignore](.gitignore). This allows us to use regular cargo builds in rust
+  only directories. This *might* come in handy.
 
-* Add the `rust_analyzer` rule in [//BUILD.bazel](BUILD.bazel).
-
-* Ran the following, which generates `rust-project.json` in `//`:
+* Ran the following, to generate `rust-project.json` in `//`:
 
   ```
   bazel run @rules_rust//tools/rust_analyzer:gen_rust_project
@@ -51,6 +49,11 @@ Changes needed to make a minimal program that uses bazel to build a rust binary.
 
   This will enable you to use [rust-analyzer][ra] as your language server for
   the project and all vendored crates.
+
+# Notes
+
+* The files `//:Cargo.Bazel.lock` and `//:Cargo.lock` would probably better fit
+  into a directory `//third_party/cargo`, but that does not seem to work.
 
 [bazel]: https://bazel.io
 [bpl]: https://docs.rs/bumpalo 
