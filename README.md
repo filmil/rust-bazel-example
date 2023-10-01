@@ -59,10 +59,6 @@ different.
   * add a rule that makes bazel download remote rust repositories.
   * add a rule to download external rust crates.
 
-  The file [program/BUILD.bazel](program/BUILD.bazel) shows how you can build a
-  rust binary, that uses a dependency, in this case [bumpalo][bpl].  Note how
-  the dependency is referred through its label `@crate_index//:bumpalo`.
-
 * Made sure that `target` and `rust-project.json` are in
   [.gitignore](.gitignore). This allows us to use regular cargo builds in rust
   only directories. This *might* come in handy.
