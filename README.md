@@ -1,6 +1,6 @@
 # rust-bazel-example ![Build](https://github.com/filmil/rust-bazel-example/actions/workflows/build.yml/badge.svg)
 
-*Builds are done on each PR and once a week even if no changes.*
+> Automated builds are executed on each PR, and once a week even if no changes.*
 
 An example starter project that uses bazel to compile rust programs.
 
