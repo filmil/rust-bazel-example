@@ -11,12 +11,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup bazel
-        uses: abhinavsingh/setup-bazel@v3
-        with:
-          version: 7.2.0
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+      # The bazel version to use is read from //.bazelversion.
+      - name: Setup bazel
+        uses: bazel-contrib/setup-bazel@0.15.0
+        with:
+          bazelisk-cache: true
+          disk-cache: ${{ github.workflow }}
+          repository-cache: true
       - name: Build
         run: "env CARGO_BAZEL_REPIN=true bazel build //..."
       - name: Run

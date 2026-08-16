@@ -1,6 +1,48 @@
+"""rust-bazel-example: a minimal example of building Rust with Bazel."""
+
+module(
+    name = "rust_bazel_examples",
+    version = "0.0.0",
+)
+
 ###############################################################################
-# Bazel now uses Bzlmod by default to manage external dependencies.
-# Please consider migrating your external dependencies from WORKSPACE to MODULE.bazel.
+# Rules and toolchains
 #
-# For more details, please check https://github.com/bazelbuild/bazel/issues/18958
+# To find additional information on this release or newer ones visit:
+# https://github.com/bazelbuild/rules_rust/releases
 ###############################################################################
+
+bazel_dep(name = "rules_rust", version = "0.73.0")
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2021",
+    versions = ["1.97.1"],
+)
+use_repo(rust, "rust_toolchains")
+
+register_toolchains("@rust_toolchains//:all")
+
+###############################################################################
+# External crates
+#
+# This is how to generate new lock files.  At the project outset, you must
+#   (1) create the empty files `//:Cargo.lock` and `//:Cargo.Bazel.lock`.
+#   (2) Run `env CARGO_BAZEL_REPIN=true bazel build //...` to initialize the
+#       lockfiles.
+###############################################################################
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+
+# Add any other crates you need here.
+crate.spec(
+    package = "bumpalo",
+    version = "3.6.1",
+)
+
+crate.from_specs(
+    name = "crate_index",
+    cargo_lockfile = "//:Cargo.lock",
+    lockfile = "//:Cargo.Bazel.lock",
+)
+use_repo(crate, "crate_index")

@@ -1,4 +1,4 @@
-load("@crate_index//:defs.bzl", "aliases", "all_crate_deps")
+load("@crate_index//:defs.bzl", "all_crate_deps")
 load("@rules_rust//rust:defs.bzl", "rust_binary")
 
 package(default_visibility = ["//visibility:public"])
@@ -7,12 +7,16 @@ rust_binary(
     name = "my_program",
     edition = "2021",
     srcs = ["src/main.rs", "src/some.rs",],
-    deps = [ "@crate_index//:bumpalo" ],
-    # You can also do this instead of the above `deps`.
+    deps = [ "@crate_index//bumpalo" ],
+    # You can also do this instead of the above `deps`.  The crates are declared
+    # in `//:MODULE.bazel` with `crate.spec`, rather than in a `Cargo.toml`, so
+    # they live under the root package name of `crate_index`, which is "".
     #deps = all_crate_deps(
        #normal = True,
+       #package_name = "",
     #),
     proc_macro_deps = all_crate_deps(
        proc_macro = True,
+       package_name = "",
     ),
 )
