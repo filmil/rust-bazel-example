@@ -6,6 +6,11 @@ on:
     branches: [ main ]
   schedule:
     - cron: "47 5 * * 0"
+  # Manual runs: the "Run workflow" button, or `gh workflow run build.yml`.
+  # GitHub only offers it once this file is on the DEFAULT branch — a
+  # workflow_dispatch that exists only on a topic branch is not offered, though
+  # once it is on main you can dispatch it against any ref.
+  workflow_dispatch:
 
 jobs:
   test:
